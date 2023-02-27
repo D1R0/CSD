@@ -1,1 +1,1 @@
-bine ai venit
+pagina principala
