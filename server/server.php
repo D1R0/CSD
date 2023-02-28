@@ -15,3 +15,13 @@ if($_POST["command"]=="read"){
     header('Content-Type: application/json; charset=utf-8');
     echo json_encode($player);
 }
+if($_POST["command"]=="timp"){
+    $time=$_POST["time"];
+    $fileName="../data/sessionPlayer.txt";
+    $myfile = fopen($fileName, "r") or die("Unable to open file!");
+    $player= fread($myfile,filesize($fileName));
+    $concurenti="../data/concurenti.txt";
+    $concurentifile = fopen($concurenti, "r") or die("Unable to open file!");
+    $concurentiData= fread($myfile,filesize($fileName));
+    fclose($myfile);
+}
