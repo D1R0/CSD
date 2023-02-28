@@ -87,7 +87,12 @@ function start() {
     setTime(document.getElementById("time").innerHTML);
   }
 }
-
+function timeFinal(time){
+  url="/server/server.php";
+  $.post(url,{command:"timp",time:time},function(response){
+    console.log(response)
+  })
+}
 function update() {
   stopTime = new Date();
   let time = (stopTime - startTime) / 1000;

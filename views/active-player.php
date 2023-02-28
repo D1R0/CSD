@@ -1,4 +1,4 @@
-<span class="activePlayer">Jucator Activ
+<span class="activePlayer">
     <?php $fileName = "data/sessionPlayer.txt";
     $myfile = fopen($fileName, "r") or die("Unable to open file!");
     $player = fread($myfile, filesize($fileName));
