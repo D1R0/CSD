@@ -7,7 +7,7 @@ $file = 'data/concurentiTimp.csv';
 if (($handle = fopen($file, "r")) !== FALSE) {
 
   // Crează tabelul HTML
-  echo "<table>\n";
+  echo "<table class='table table-striped'>\n";
 
   // Loop prin fiecare linie din fișierul CSV
   while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
