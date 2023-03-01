@@ -1,7 +1,7 @@
 <?php
 
 // Numele fișierului CSV
-$file = 'data/concurenti.csv';
+$file = 'data/concurentiTimp.csv';
 
 // Deschide fișierul CSV pentru citire
 if (($handle = fopen($file, "r")) !== FALSE) {

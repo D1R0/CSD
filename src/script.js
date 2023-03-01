@@ -64,11 +64,7 @@ function activeFunc(active) {
   $(".activeRow .active .auto").text(auto);
   $(".activeRow .active .clasa").text(grupa);
 }
-function setTime(time) {
-  concurent = $("#data-table tr")[active];
-  console.log($(concurent).children()[$(concurent).children().length - 1]);
-  $($(concurent).children()[$(concurent).children().length - 1]).text(time);
-}
+
 let startTime;
 let stopTime;
 let running = false;
@@ -84,7 +80,9 @@ function start() {
     running = false;
     clearInterval(updateTime);
     document.getElementById("start").innerHTML = "Start";
-    setTime(document.getElementById("time").innerHTML);
+    $.post("server/server.php",{command:"timp",timp:$("#time").text()},function(response){
+      console.log("updated");
+    })
   }
 }
 function timeFinal(time){
@@ -103,7 +101,7 @@ function update() {
   let secondsString = seconds.toString().padStart(2, "0");
   let millisecondsString = milliseconds.toString().padStart(2, "0");
   document.getElementById("time").innerHTML =
-    minutesString + ":" + secondsString + ":" + millisecondsString;
+    minutesString + ":" + secondsString + "." + millisecondsString;
 }
 
 function reset() {
