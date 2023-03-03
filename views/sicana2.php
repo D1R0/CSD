@@ -1,7 +1,7 @@
 <script src="/src/sicana.js"></script>
 <div class="">
     <div class="body ">
-        <div class="headerSicana" data-sicana="13">
+        <div class="headerSicana" data-sicana="2">
             <div class="activeRow text-center my-5">
                 <h1 class="active text-center">
                     <div class="w-100 mx-auto d-flex justify-content-center">

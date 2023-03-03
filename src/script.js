@@ -1,37 +1,42 @@
-fetch("../data/concurenti.csv")
-  .then((response) => response.text())
-  .then((csv) => {
-    Papa.parse(csv, {
-      header: true,
-      dynamicTyping: true,
-      complete: function (results) {
-        var data = results.data;
-        var headers = results.meta.fields;
-        var table = document.getElementById("data-table");
-        var thead = document.createElement("thead");
-        var row = thead.insertRow();
-        headers.forEach(function (header) {
-          var th = document.createElement("th");
-          th.innerHTML = header;
-          row.appendChild(th);
-        });
-        table.appendChild(thead);
-        for (var i = 0; i < data.length; i++) {
-          var row = table.insertRow();
-          for (var key in data[i]) {
-            var cell = row.insertCell();
-            var text = document.createTextNode(
-              data[i][key] == null ? "" : data[i][key]
-            );
-            cell.appendChild(text == "null" ? "" : text);
-            cell.setAttribute("id", key);
-          }
-        }
-        active = 1;
-        activeFunc(active);
-      },
-    });
-  });
+// fetch("../data/concurenti.csv")
+//   .then((response) => response.text())
+//   .then((csv) => {
+//     if(typeof Papa != undefined){
+//     Papa.parse(csv, {
+//       header: true,
+//       dynamicTyping: true,
+//       complete: function (results) {
+//         if ($("data-table").length > 1) {
+//           var data = results.data;
+//           var headers = results.meta.fields;
+//           var table = document.getElementById("data-table");
+//           var thead = document.createElement("thead");
+//           var row = thead.insertRow();
+//           headers.forEach(function (header) {
+//             var th = document.createElement("th");
+//             th.innerHTML = header;
+//             row.appendChild(th);
+//           });
+//           table.appendChild(thead);
+//           for (var i = 0; i < data.length; i++) {
+//             var row = table.insertRow();
+//             for (var key in data[i]) {
+//               var cell = row.insertCell();
+//               var text = document.createTextNode(
+//                 data[i][key] == null ? "" : data[i][key]
+//               );
+//               cell.appendChild(text == "null" ? "" : text);
+//               cell.setAttribute("id", key);
+//             }
+//           }
+//           active = 1;
+//           activeFunc(active);
+//         }
+//       },
+//     });
+//   }
+// });
+const SERVER_URL = "server/server.php"
 $(function () {
   $(".next").on("click", function () {
     if (active < $("#data-table tr").length) {
@@ -80,16 +85,20 @@ function start() {
     running = false;
     clearInterval(updateTime);
     document.getElementById("start").innerHTML = "Start";
-    $.post("server/server.php",{command:"timp",timp:$("#time").text()},function(response){
-      console.log("updated");
-    })
+    $.post(
+      "server/server.php",
+      { command: "timp", timp: $("#time").text() },
+      function (response) {
+        console.log("updated");
+      }
+    );
   }
 }
-function timeFinal(time){
-  url="/server/server.php";
-  $.post(url,{command:"timp",time:time},function(response){
-    console.log(response)
-  })
+function timeFinal(time) {
+  url = "/server/server.php";
+  $.post(url, { command: "timp", time: time }, function (response) {
+    console.log(response);
+  });
 }
 function update() {
   stopTime = new Date();
@@ -111,8 +120,7 @@ function reset() {
   document.getElementById("start").innerHTML = "Start";
 }
 
-document.getElementById("start").addEventListener("click", start);
-
+$(".start").on("click", start);
 
 function exportCSV() {
   // Create a CSV string from the table data

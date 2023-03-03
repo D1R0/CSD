@@ -14,7 +14,7 @@ fetch("../data/concurenti.csv")
 });
 function sendPlayer(){
     playerActive=$(".activePlayer").val()
-    $.post("/server/server.php",{command:"write",active:playerActive},function(response){
+    $.post("/server/server.php",{command:"playerActive",active:playerActive},function(response){
         $(".showPlayer").text("Concurent Activ: "+playerActive)
     })
 }
