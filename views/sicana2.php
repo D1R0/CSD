@@ -84,13 +84,8 @@
             </div>
         </div>
         <div class="text-center my-4">
-            <h4>Sicanele 1 si 3</h4>
-            <button class="btn btn-primary treceriBtn">Trecerea 1</button>
+            <h4>Sicana 2</h4>
+            <button class="btn btn-primary treceriBtn">Trecerea</button>
         </div><br><br>
-
-        <div class="text-center my-4">
-            <h4>Export CSV</h4>
-            <button class="btn btn-primary" onclick="exportCSV()">Export</button>
-        </div>
     </div>
 </div>
