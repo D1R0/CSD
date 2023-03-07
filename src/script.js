@@ -36,7 +36,7 @@
 //     });
 //   }
 // });
-const SERVER_URL = "server/server.php"
+const SERVER_URL = "/api/services";
 $(function () {
   $(".next").on("click", function () {
     if (active < $("#data-table tr").length) {
@@ -81,12 +81,15 @@ function start() {
     startTime = new Date();
     updateTime = setInterval(update, 10);
     document.getElementById("start").innerHTML = "Stop";
+    $.post(SERVER_URL, { command: "clean" }, function (response) {
+      console.log("updated");
+    });
   } else {
     running = false;
     clearInterval(updateTime);
     document.getElementById("start").innerHTML = "Start";
     $.post(
-      "server/server.php",
+      SERVER_URL,
       { command: "timp", timp: $("#time").text() },
       function (response) {
         console.log("updated");
@@ -95,7 +98,6 @@ function start() {
   }
 }
 function timeFinal(time) {
-  url = "/server/server.php";
   $.post(url, { command: "timp", time: time }, function (response) {
     console.log(response);
   });

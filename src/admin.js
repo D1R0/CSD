@@ -5,16 +5,28 @@ fetch("../data/concurenti.csv")
       header: true,
       dynamicTyping: true,
       complete: function (results) {
-         data = results.data;
-        data.forEach((concurent)=>{
-            $(".activePlayer").append("<option>"+concurent["nr. conc."]+"</option>")
-        })
-    },
-});
-});
-function sendPlayer(){
-    playerActive=$(".activePlayer").val()
-    $.post("/server/server.php",{command:"playerActive",active:playerActive},function(response){
-        $(".showPlayer").text("Concurent Activ: "+playerActive)
-    })
+        data = results.data;
+        data.forEach((concurent) => {
+          $(".activePlayer").append(
+            "<option>" + concurent["nr. conc."] + "</option>"
+          );
+        });
+      },
+    });
+  });
+function sendPlayer() {
+  playerActive = $(".activePlayer").val();
+  $.post(
+    SERVER_URL,
+    { command: "playerActive", active: playerActive },
+    function (response) {
+      $(".showPlayer").text("Concurent Activ: " + playerActive);
+    }
+  );
+}
+
+function clearDatas() {
+  $.post(SERVER_URL, { command: "clearDb" }, function (response) {
+    $(".popup").hide();
+  });
 }

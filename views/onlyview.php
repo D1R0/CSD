@@ -1,39 +1,50 @@
-<?php
+<html>
 
-// Numele fișierului CSV
-$file = 'data/concurentiTimp.csv';
+<head>
+  <?php require_once("components/header.php"); ?>
+</head>
 
-// Deschide fișierul CSV pentru citire
-if (($handle = fopen($file, "r")) !== FALSE) {
+<body>
 
-  // Crează tabelul HTML
-  echo "<table class='table table-striped'>\n";
+  <?php
 
-  // Loop prin fiecare linie din fișierul CSV
-  while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+  // Numele fișierului CSV
+  $file = 'data/concurentiTimp.csv';
 
-    // Crează un rând de tabel HTML pentru această linie
-    echo "<tr>";
+  // Deschide fișierul CSV pentru citire
+  if (($handle = fopen($file, "r")) !== FALSE) {
 
-    // Loop prin fiecare coloană din linie
-    foreach ($data as $cell) {
+    // Crează tabelul HTML
+    echo "<table class='table table-striped'>\n";
 
-      // Adaugă fiecare valoare într-o celulă de tabel
-      echo "<td>" . htmlspecialchars($cell) . "</td>";
+    // Loop prin fiecare linie din fișierul CSV
+    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+
+      // Crează un rând de tabel HTML pentru această linie
+      echo "<tr>";
+
+      // Loop prin fiecare coloană din linie
+      foreach ($data as $cell) {
+
+        // Adaugă fiecare valoare într-o celulă de tabel
+        echo "<td>" . htmlspecialchars($cell) . "</td>";
+
+      }
+
+      // Închide rândul de tabel
+      echo "</tr>\n";
 
     }
 
-    // Închide rândul de tabel
-    echo "</tr>\n";
+    // Închide tabelul HTML
+    echo "</table>\n";
+
+    // Închide fișierul CSV
+    fclose($handle);
 
   }
 
-  // Închide tabelul HTML
-  echo "</table>\n";
+  ?>
+</body>
 
-  // Închide fișierul CSV
-  fclose($handle);
-
-}
-
-?>
+</html>
