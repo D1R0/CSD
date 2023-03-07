@@ -8,7 +8,11 @@ fetch("../data/concurenti.csv")
         data = results.data;
         data.forEach((concurent) => {
           $(".activePlayer").append(
-            "<option>" + concurent["nr. conc."] + "</option>"
+            "<option>" +
+              concurent["nr. conc."] +
+              " " +
+              concurent["Pilot"] +
+              "</option>"
           );
         });
       },
