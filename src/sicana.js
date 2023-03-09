@@ -11,8 +11,9 @@ $(document).ready(function () {
           $(this).prop("checked", false);
         }
       });
-      sectiune = "Sicana"+$(".header").data("sicana");
-      data = { sectiune, total, jaloane: jaloanele };
+    sectiune = "Sicana" + $(".header").data("sicana");
+    console.log(sectiune);
+    data = { sectiune, total, jaloane: jaloanele };
     $.post(SERVER_URL, { command: "penalizari", data: data }, function () {
       console.log("sended");
     });

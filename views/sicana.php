@@ -10,7 +10,7 @@
     <script src="/src/sicana.js"></script>
     <div class="">
         <div class="body ">
-            <div class="headerSicana" data-sicana="<?php echo $id; ?>">
+            <div class="header" data-sicana="<?php echo $id; ?>">
                 <div class="activeRow text-center my-5">
                     <h1 class="active text-center">
                         <h1> Sicana

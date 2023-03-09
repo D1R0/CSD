@@ -44,11 +44,10 @@ class ServerControler
                 fclose($myfile);
             }
             if ($_POST["command"] == "timp") {
-                $row_identifier = $this->getActivePlayer();
+                $row_identifier = explode(" ", $this->getActivePlayer())[0];
                 $timp = $_POST["timp"];
                 $this->writeLog("timp: " . $timp);
                 $fileName = $this->penalizariDir;
-                echo $fileName;
                 $myfile = fopen($fileName, "r");
                 $penalizari = explode(",", fread($myfile, filesize($fileName)));
                 fclose($myfile);
@@ -62,6 +61,7 @@ class ServerControler
                     } catch (\Exception $e) {
                     }
                 }
+
                 $this->replace_value("data/concurentiTimp.csv", $row_identifier, $timp, $totalPenalizari);
             }
             if ($_POST["command"] == "penalizari") {
@@ -95,8 +95,8 @@ class ServerControler
             if ($row[0] == $row_identifier) {
                 $row[5] = $new_value;
                 $row[6] = $totalPenalizari;
+                print_r($row);
             }
-
             $temp->fputcsv($row);
         }
 
