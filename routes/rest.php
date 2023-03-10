@@ -65,7 +65,7 @@ $routes->add('/', 'GET', function () {
 });
 $routes->add('/start-stop', 'GET', function () {
     if (isset($_SESSION['role'])) {
-        if ($_SESSION['role'] == "mod") {
+        if ($_SESSION['role'] == "startstop") {
             render("start-stop");
         } else {
             render("logout");
