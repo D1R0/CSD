@@ -43,6 +43,10 @@ class ServerControler
                 fwrite($myfile, "");
                 fclose($myfile);
             }
+            if ($_POST["command"] == "startSession") {
+                $auth = $_POST['data'];
+                $this->auth($auth);
+            }
             if ($_POST["command"] == "timp") {
                 $row_identifier = explode(" ", $this->getActivePlayer())[0];
                 $timp = $_POST["timp"];
@@ -93,7 +97,7 @@ class ServerControler
         while (!$file->eof()) {
             $row = $file->fgetcsv();
             if ($row[0] == $row_identifier) {
-                $row[5] = $new_value;
+                $row[5] = "-/-";
                 $row[6] = $totalPenalizari;
                 print_r($row);
             }
@@ -116,5 +120,50 @@ class ServerControler
         $time = date("Y-m-d H:i:s");
         fwrite($file, "$time: $string" . PHP_EOL);
         fclose($file);
+    }
+    private function auth($user)
+    {
+        $success = false;
+        $users = [
+            "user1" => [
+                "id" => "sicana",
+                "pass" => "sicana",
+                "role" => "sicana"
+            ],
+            "user2" => [
+                "id" => "jalon",
+                "pass" => "jalon",
+                "role" => "jalon"
+            ],
+            "user3" => [
+                "id" => "startstop",
+                "pass" => "startstop",
+                "role" => "startstop"
+            ],
+            "user4" => [
+                "id" => "admin",
+                "pass" => "admin",
+                "role" => "admin"
+            ],
+            "user5" => [
+                "id" => "mod",
+                "pass" => "mod",
+                "role" => "mod"
+            ]
+        ];
+        foreach ($users as $key => $value) {
+            if ($value["id"] == $user["username"]) {
+                if ($value["pass"] == $user["password"]) {
+                    $success = true;
+                    $role = $value["role"];
+                }
+            }
+        }
+        if ($success == true) {
+            echo json_encode(['result' => $success, ['user' => $user["username"], 'role' => $role]]);
+        } else {
+
+            echo json_encode(['result' => $success]);
+        }
     }
 }

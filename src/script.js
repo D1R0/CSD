@@ -1,41 +1,3 @@
-// fetch("../data/concurenti.csv")
-//   .then((response) => response.text())
-//   .then((csv) => {
-//     if(typeof Papa != undefined){
-//     Papa.parse(csv, {
-//       header: true,
-//       dynamicTyping: true,
-//       complete: function (results) {
-//         if ($("data-table").length > 1) {
-//           var data = results.data;
-//           var headers = results.meta.fields;
-//           var table = document.getElementById("data-table");
-//           var thead = document.createElement("thead");
-//           var row = thead.insertRow();
-//           headers.forEach(function (header) {
-//             var th = document.createElement("th");
-//             th.innerHTML = header;
-//             row.appendChild(th);
-//           });
-//           table.appendChild(thead);
-//           for (var i = 0; i < data.length; i++) {
-//             var row = table.insertRow();
-//             for (var key in data[i]) {
-//               var cell = row.insertCell();
-//               var text = document.createTextNode(
-//                 data[i][key] == null ? "" : data[i][key]
-//               );
-//               cell.appendChild(text == "null" ? "" : text);
-//               cell.setAttribute("id", key);
-//             }
-//           }
-//           active = 1;
-//           activeFunc(active);
-//         }
-//       },
-//     });
-//   }
-// });
 const SERVER_URL = "/api/services";
 $(function () {
   $(".next").on("click", function () {
@@ -50,6 +12,7 @@ $(function () {
       activeFunc(active);
     }
   });
+  logInit();
 });
 function activeFunc(active) {
   $("#data-table tr").each(function () {
@@ -145,4 +108,40 @@ function exportCSV() {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+}
+
+function logInit() {
+  if ($(".localLog").length > 0) {
+    $(".localLog").height($(document).height() - $(".localLog").offset().top);
+  }
+}
+
+function login() {
+  username = $(".username").val();
+  password = $(".password").val();
+  data = { username: username, password: password };
+  $.post(
+    SERVER_URL,
+    { command: "startSession", data: data },
+    function (response) {
+      var responseObject = JSON.parse(response);
+      console.log(responseObject);
+      if (responseObject["result"] == true) {
+        var pathArray = window.location.pathname.split("/");
+        var newPathname = "";
+        for (i = 0; i < pathArray.length; i++) {
+          newPathname += "/";
+          newPathname += pathArray[i];
+        }
+        $("#div_session_write").load(
+          "/views/auth.php?user=" +
+            responseObject[0]["user"] +
+            "&role=" +
+            responseObject[0]["role"]
+        );
+      } else {
+        $(".response").text("Datele sunt incorecte");
+      }
+    }
+  );
 }

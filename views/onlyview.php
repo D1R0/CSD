@@ -1,12 +1,4 @@
-<html>
-
-<head>
-  <?php require_once("components/header.php"); ?>
-</head>
-
-<body>
-
-  <?php
+<?php
 
   // Numele fișierului CSV
   $file = 'data/concurentiTimp.csv';
@@ -43,8 +35,3 @@
     fclose($handle);
 
   }
-
-  ?>
-</body>
-
-</html>

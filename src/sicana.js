@@ -1,7 +1,10 @@
+let counter = 0;
 $(document).ready(function () {
-  $(".treceriBtn").on("click", function () {
+  $(".treceriBtn").bind("click", function () {
     total = 0;
     jaloanele = [];
+    counter += 1;
+    $(this).text("Trecere " + counter);
     $(".jaloaneSectiune")
       .find("input")
       .each(function () {
@@ -17,5 +20,16 @@ $(document).ready(function () {
     $.post(SERVER_URL, { command: "penalizari", data: data }, function () {
       console.log("sended");
     });
+    $(".localLog p")
+      .first()
+      .before(
+        "<p>Trecere " +
+          counter +
+          ", penalizari: " +
+          jaloanele +
+          ", total timp " +
+          total +
+          "</p>"
+      );
   });
 });
