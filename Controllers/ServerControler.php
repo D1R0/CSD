@@ -127,27 +127,27 @@ class ServerControler
         $users = [
             "user1" => [
                 "id" => "sicana",
-                "pass" => "sicana",
+                "pass" => "sicanacsd23",
                 "role" => "sicana"
             ],
             "user2" => [
                 "id" => "jalon",
-                "pass" => "jalon",
+                "pass" => "jaloncsd23",
                 "role" => "jalon"
             ],
             "user3" => [
                 "id" => "startstop",
-                "pass" => "startstop",
+                "pass" => "startstopcsd23",
                 "role" => "startstop"
             ],
             "user4" => [
                 "id" => "admin",
-                "pass" => "admin",
+                "pass" => "admincsd23",
                 "role" => "admin"
             ],
             "user5" => [
                 "id" => "mod",
-                "pass" => "mod",
+                "pass" => "modcsd23",
                 "role" => "mod"
             ]
         ];
