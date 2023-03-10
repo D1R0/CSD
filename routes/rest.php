@@ -64,7 +64,15 @@ $routes->add('/', 'GET', function () {
     render("onlyview");
 });
 $routes->add('/start-stop', 'GET', function () {
-    render("start-stop");
+    if (isset($_SESSION['role'])) {
+        if ($_SESSION['role'] == "mod") {
+            render("start-stop");
+        } else {
+            render("logout");
+        }
+    } else {
+        render("login");
+    }
 });
 $routes->add('/logout', 'GET', function () {
     render("logout");
