@@ -23,6 +23,9 @@ tr {
   select {
     font-size: 3vh !important;
   }
+  input {
+    font-size: 3vh !important;
+  }
   input[type="checkbox"] {
     /* Double-sized Checkboxes */
     -ms-transform: scale(2); /* IE */
