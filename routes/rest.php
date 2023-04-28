@@ -1,17 +1,18 @@
 <?php
 
 use App\Controllers\ServerControler\ServerControler;
-use App\Controllers\Routes\Routes;
+use App\Config\Routes\Routes;
 
 session_start();
 $routes = new Routes();
 
 $routes->add('/sicana/{id}', 'GET', function ($id) {
-    $sicaneList = [2, 13];
-    if (in_array($id, $sicaneList)) {
+    $services = new ServerControler();
+    $posturi = $services->posturi();
+    if (in_array($id, array_keys($posturi["sicana"]))) {
         if (isset($_SESSION['role'])) {
-            if ($_SESSION['role'] == "sicana") {
-                render("sicana", ['id' => $id]);
+            if ($_SESSION['role'] == "sicana" || $_SESSION['role'] == "admin") {
+                render($posturi["sicana"][$id], ['id' => $id]);
             } else {
                 render("logout");
             }
@@ -21,11 +22,12 @@ $routes->add('/sicana/{id}', 'GET', function ($id) {
     }
 });
 $routes->add('/jalon/{id}', 'GET', function ($id) {
-    $jalonList = [1, 4, 23];
-    if (in_array($id, $jalonList)) {
+    $services = new ServerControler();
+    $posturi = $services->posturi();
+    if (in_array($id,  array_keys($posturi["jalon"]))) {
         if (isset($_SESSION['role'])) {
-            if ($_SESSION['role'] == "jalon") {
-                render("jalon", ['id' => $id]);
+            if ($_SESSION['role'] == "jalon" || $_SESSION['role'] == "admin") {
+                render($posturi["jalon"][$id], ['id' => $id]);
             } else {
                 render("logout");
             }
@@ -36,7 +38,7 @@ $routes->add('/jalon/{id}', 'GET', function ($id) {
 });
 $routes->add('/mod', 'GET', function () {
     if (isset($_SESSION['role'])) {
-        if ($_SESSION['role'] == "mod") {
+        if ($_SESSION['role'] == "mod" || $_SESSION['role'] == "admin") {
             render("mod");
         } else {
             render("logout");
@@ -49,7 +51,20 @@ $routes->add('/mod', 'GET', function () {
 $routes->add('/admin', 'GET', function () {
     if (isset($_SESSION['role'])) {
         if ($_SESSION['role'] == "admin") {
-            render("admin");
+            $services = new ServerControler();
+            $posturi = $services->posturi();
+            render("admin", ["posturi" => $posturi]);
+        } else {
+            render("logout");
+        }
+    } else {
+        render("login");
+    }
+});
+$routes->add('/start-stop', 'GET', function () {
+    if (isset($_SESSION['role'])) {
+        if ($_SESSION['role'] == "startstop" || $_SESSION['role'] == "admin") {
+            render("start-stop");
         } else {
             render("logout");
         }
@@ -63,19 +78,12 @@ $routes->add('/auth', 'GET', function () {
 $routes->add('/', 'GET', function () {
     render("onlyview");
 });
-$routes->add('/start-stop', 'GET', function () {
-    if (isset($_SESSION['role'])) {
-        if ($_SESSION['role'] == "startstop") {
-            render("start-stop");
-        } else {
-            render("logout");
-        }
-    } else {
-        render("login");
-    }
-});
 $routes->add('/logout', 'GET', function () {
     render("logout");
+});
+$routes->add('/download', 'GET', function () {
+    $services = new ServerControler();
+    return $services->download();
 });
 
 function render($view, $param = [])

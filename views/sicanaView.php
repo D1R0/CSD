@@ -1,33 +1,7 @@
 <script src="/src/sicana.js"></script>
 <div class="allContainer">
-    <div class="header" data-sicana="<?php echo $id; ?>">
-        <div class="activeRow text-center py-5">
-            <!-- <h1 class="active text-center"> -->
-            <h1> Sicana
-                <?php echo $id; ?>
-            </h1>
-            <div class="w-100 mx-auto d-flex justify-content-center">
-                <div class="w-100">
-
-                    <h3>Nr. Concurent:</h3>
-                    <h3 class="concurentActiv">
-                        <?php $fileName = "data/sessionPlayer.txt";
-                        $myfile = fopen($fileName, "r") or die("Unable to open file!");
-                        $player = fread($myfile, filesize($fileName));
-                        fclose($myfile);
-                        echo $player; ?>
-                    </h3>
-                </div>
-
-            </div>
-            <div class="w-100">
-                <h4 class="auto"></h4>
-                <h4 class="clasa"></h4>
-            </div>
-        </div>
-    </div>
-    <hr>
-    <div class="jaloaneSectiune">
+    <?php include "components/postHead.php" ?>
+    <div class="sicanaSectiune">
         <div class="checkButtons text-left" id="Elementul 1">
             <label>
                 <input type="checkbox" name="option1" value="Option 1" data-penalizare="10" id="E13">
@@ -80,12 +54,5 @@
             </label><br><br><br>
         </div>
     </div>
-    <div class="text-center my-4">
-        <button class="btn btn-primary treceriBtn">Trecere</button>
-    </div>
-    <br>
-    <br>
-    <div class="localLog bg-warning vw-100 ">
-        <p>Log Section</p>
-    </div>
+    <?php include "components/postFooter.php" ?>
 </div>

@@ -2,6 +2,8 @@
 
 namespace App\Controllers\ServerControler;
 
+use ZipArchive;
+
 
 class ServerControler
 {
@@ -165,5 +167,43 @@ class ServerControler
 
             echo json_encode(['result' => $success]);
         }
+    }
+    public function posturi()
+    {
+
+        $posturi = [
+            "sicana" => [
+                2 => "sicanaView",
+                13 => "sicanaView"
+            ],
+            "jalon" => [
+                1 => "jalonView",
+                4 => "jalonView",
+                23 => "jalonView",
+            ]
+        ];
+        return $posturi;
+    }
+    public function download()
+    {
+        $zip = new ZipArchive();
+
+        $zip_filename = 'archive.zip';
+
+        if ($zip->open($zip_filename, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== TRUE) {
+            die("Failed to create archive\n");
+        }
+
+        $zip->addFile('../data/concurentiTimp.csv');
+        $zip->addFile('../data/istoric.log');
+
+        $zip->close();
+
+        header('Content-Type: application/zip');
+        header('Content-disposition: attachment; filename=' . basename($zip_filename));
+        header('Content-Length: ' . filesize($zip_filename));
+
+        readfile($zip_filename);
+        unlink($zip_filename);
     }
 }

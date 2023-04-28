@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Routes;
+namespace App\Config\Routes;
 
 class Routes
 {
@@ -45,5 +45,4 @@ class Routes
     http_response_code(404);
     echo 'Page not found';
   }
-
 }
