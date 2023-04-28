@@ -1,7 +1,7 @@
-<div class="header" data-post="<?php echo $id; ?>">
+<div class="header" data-post="<?php echo $id; ?>" data-type="<?php echo $type ?>">
     <div class="activeRow text-center py-5">
         <h1>
-            <?php echo $id; ?>
+            <?php echo  $type . " " . $id; ?>
         </h1>
         <div class="w-100 mx-auto d-flex justify-content-center">
             <div class="w-100">

@@ -29,18 +29,20 @@
                 <tr>
                     <th>Tip</th>
                     <th>Post</th>
+                    <th>Templates</th>
                     <th>View</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($posturi as $key => $value) : ?>
-                    <?php foreach ($value as $id => $view) : ?>
-                        <tr>
-                            <td><?php echo $key; ?></td>
-                            <td><?php echo $id; ?></td>
-                            <td><?php echo $view; ?></td>
-                        </tr>
-                    <?php endforeach; ?>
+                <?php foreach ($value as $id => $view) : ?>
+                <tr>
+                    <td><?php echo $key; ?></td>
+                    <td><?php echo $id; ?></td>
+                    <td><?php echo $view; ?></td>
+                    <td><a href="<?php echo "/".$key."/".$id; ?>">View page</a></td>
+                </tr>
+                <?php endforeach; ?>
                 <?php endforeach; ?>
             </tbody>
         </table>

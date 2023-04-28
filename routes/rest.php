@@ -12,7 +12,7 @@ $routes->add('/sicana/{id}', 'GET', function ($id) {
     if (in_array($id, array_keys($posturi["sicana"]))) {
         if (isset($_SESSION['role'])) {
             if ($_SESSION['role'] == "sicana" || $_SESSION['role'] == "admin") {
-                render($posturi["sicana"][$id], ['id' => $id]);
+                render($posturi["sicana"][$id], ['id' => $id, 'type' => "Sicana"]);
             } else {
                 render("logout");
             }
@@ -27,7 +27,7 @@ $routes->add('/jalon/{id}', 'GET', function ($id) {
     if (in_array($id,  array_keys($posturi["jalon"]))) {
         if (isset($_SESSION['role'])) {
             if ($_SESSION['role'] == "jalon" || $_SESSION['role'] == "admin") {
-                render($posturi["jalon"][$id], ['id' => $id]);
+                render($posturi["jalon"][$id], ['id' => $id, 'type' => "Jalon"]);
             } else {
                 render("logout");
             }

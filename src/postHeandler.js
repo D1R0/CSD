@@ -2,7 +2,7 @@ let counter = 0;
 $(document).ready(function () {
   $(".treceriBtn").bind("click", function () {
     total = 0;
-    jaloanele = [];
+    penalties = [];
     counter += 1;
     $(this).text("Trecere " + counter);
     $(".checkButtons")
@@ -10,12 +10,12 @@ $(document).ready(function () {
       .each(function () {
         if ($(this).is(":checked")) {
           total += $(this).data("penalizare");
-          jaloanele.push($(this).attr("id"));
+          penalties.push($(this).attr("id"));
           $(this).prop("checked", false);
         }
       });
-    sectiune = "Jalon" + $(".header").data("jalon");
-    data = { sectiune, total, jaloane: jaloanele };
+    sectiune = $(".header").data("type") + $(".header").data("post");
+    data = { sectiune, total, penalties: penalties };
     $.post(SERVER_URL, { command: "penalizari", data: data }, function () {
       console.log("sended");
     });
@@ -25,7 +25,7 @@ $(document).ready(function () {
         "<p>Trecere " +
           counter +
           ", penalizari: " +
-          jaloanele +
+          penalties +
           ", total timp " +
           total +
           "</p>"

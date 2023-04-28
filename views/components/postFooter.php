@@ -6,3 +6,4 @@
 <div class="localLog bg-warning vw-100 ">
     <p>Log Section</p>
 </div>
+<script src="/src/postHeandler.js"></script>

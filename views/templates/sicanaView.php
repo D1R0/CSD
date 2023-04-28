@@ -1,6 +1,5 @@
-<script src="/src/sicana.js"></script>
 <div class="allContainer">
-    <?php include "components/postHead.php" ?>
+    <?php include "views/components/postHead.php" ?>
     <div class="sicanaSectiune">
         <div class="checkButtons text-left" id="Elementul 1">
             <label>
@@ -54,5 +53,5 @@
             </label><br><br><br>
         </div>
     </div>
-    <?php include "components/postFooter.php" ?>
+    <?php include "views/components/postFooter.php" ?>
 </div>

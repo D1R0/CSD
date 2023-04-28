@@ -72,11 +72,11 @@ class ServerControler
             }
             if ($_POST["command"] == "penalizari") {
                 $data = $_POST["data"];
-                $jaloane = isset($data["jaloane"]) ? $data["jaloane"] : [];
+                $penalties = isset($data["penalties"]) ? $data["penalties"] : [];
                 $file = fopen($this->penalizariDir, "a");
                 fwrite($file, $data["total"] . ",");
                 fclose($file);
-                $this->writeLog("trecere la " .  $data["sectiune"] . " penalizari: " . implode(",", $jaloane) . " Total secunde " . $data["total"]);
+                $this->writeLog("trecere la " .  $data["sectiune"] . " penalizari: " . implode(",", $penalties) . " Total secunde " . $data["total"]);
             }
         }
     }
@@ -173,13 +173,13 @@ class ServerControler
 
         $posturi = [
             "sicana" => [
-                2 => "sicanaView",
-                13 => "sicanaView"
+                2 => "templates/sicanaView",
+                13 => "templates/sicanaView"
             ],
             "jalon" => [
-                1 => "jalonView",
-                4 => "jalonView",
-                23 => "jalonView",
+                1 => "templates/jalonView",
+                4 => "templates/jalonView",
+                23 => "templates/jalonSimplu",
             ]
         ];
         return $posturi;
