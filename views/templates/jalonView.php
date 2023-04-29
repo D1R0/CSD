@@ -3,9 +3,10 @@
 
     <div class="checkButtons text-center">
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-        <input type="checkbox" name="option5" value="Option 5" id="J2" data-penalizare="5">
-        J2
+        <label>
+            <input type="checkbox" name="option5" value="Option 5" id="J2" data-penalizare="5">
+            J2
+        </label>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
         <label>
