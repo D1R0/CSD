@@ -11,7 +11,7 @@
                 echo $player; ?>
             </p>
         </div>
-        <a class="btn btn-success" onclick="downloadTimpi()">Export Timpi</a>
+        <a class="btn btn-success" href="/downloadTimpi">Export Timpi</a>
         <button class="btn btn-danger clearData" onclick="$('.popup').show()">Wipe</button>
         <!-- <a class="btn btn-success" href="/download">Export Data</a> -->
         <div class="popup bg-light p-5">

@@ -215,4 +215,10 @@ class ServerControler
         readfile($zip_filename);
         unlink($zip_filename);
     }
+    public function downloadTimpi()
+    {
+        $file_url = '/data/concurentiTimp.csv';
+        $file_contents = file_get_contents($file_url);
+        return $file_contents;
+    }
 }

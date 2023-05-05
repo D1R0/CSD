@@ -89,6 +89,10 @@ $routes->add('/download', 'GET', function () {
     $services = new ServerControler();
     return $services->download();
 });
+$routes->add('/downloadTimpi', 'GET', function () {
+    $services = new ServerControler();
+    return $services->downloadTimpi();
+});
 
 
 function render($view, $param = [])
