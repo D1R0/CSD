@@ -5,8 +5,13 @@
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <input type="checkbox" name="option6" value="Option 6" id="J" data-penalizare="5">
         Jalon
+    <br>
+    <br>
+    <br>
+    <input type="checkbox" name="option6" value="Option 6" id="inversare" data-penalizare="3">
+        Intrare gresita
 
-    </div>
+</div>
     <br>
     <br>
 

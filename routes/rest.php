@@ -21,13 +21,13 @@ $routes->add('/sicana/{id}', 'GET', function ($id) {
         }
     }
 });
-$routes->add('/jalon/{id}', 'GET', function ($id) {
+$routes->add('/opturi/{id}', 'GET', function ($id) {
     $services = new ServerControler();
     $posturi = $services->posturi();
-    if (in_array($id,  array_keys($posturi["jalon"]))) {
+    if (in_array($id,  array_keys($posturi["opt"]))) {
         if (isset($_SESSION['role'])) {
             if ($_SESSION['role'] == "jalon" || $_SESSION['role'] == "admin") {
-                render($posturi["jalon"][$id], ['id' => $id, 'type' => "Jalon"]);
+                render($posturi["opt"][$id], ['id' => $id, 'type' => "Opt"]);
             } else {
                 render("logout");
             }

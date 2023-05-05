@@ -67,7 +67,6 @@ class ServerControler
                     } catch (\Exception $e) {
                     }
                 }
-
                 $this->replace_value("data/concurentiTimp.csv", $row_identifier, $timp, $totalPenalizari);
             }
             if ($_POST["command"] == "penalizari") {
@@ -99,7 +98,8 @@ class ServerControler
         while (!$file->eof()) {
             $row = $file->fgetcsv();
             if ($row[0] == $row_identifier) {
-                $row[5] = "-/-";
+                echo $row[0];
+                $row[5] = $new_value;
                 $row[6] = $totalPenalizari;
                 print_r($row);
             }
@@ -171,18 +171,27 @@ class ServerControler
     public function posturi()
     {
 
-        $posturi = [
+        $posturiPeriam = [
             "sicana" => [
                 2 => "templates/sicanaView",
                 13 => "templates/sicanaView"
             ],
             "jalon" => [
-                1 => "templates/jalonView",
-                4 => "templates/jalonView",
-                23 => "templates/jalonSimplu",
+                1 => "templates/jalonSimplu",
+                4 => "templates/jalonSimplu",
+                23 => "templates/opturi",
             ]
         ];
-        return $posturi;
+        $posturiSanmihai = [
+            "sicana" => [
+                1 => "templates/sicanaView",
+            ],
+            "opt" => [
+                1 => "templates/opturi",
+                2 => "templates/opturi",
+            ]
+        ];
+        return $posturiSanmihai;
     }
     public function download()
     {
