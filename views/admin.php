@@ -11,8 +11,9 @@
                 echo $player; ?>
             </p>
         </div>
+        <a class="btn btn-success" onclick="downloadTimpi()">Export Timpi</a>
         <button class="btn btn-danger clearData" onclick="$('.popup').show()">Wipe</button>
-        <a class="btn btn-success" href="/download">Export Data</a>
+        <!-- <a class="btn btn-success" href="/download">Export Data</a> -->
         <div class="popup bg-light p-5">
             <p>Esti sigur?</p>
             <hr>
@@ -40,7 +41,7 @@
                     <td><?php echo $key; ?></td>
                     <td><?php echo $id; ?></td>
                     <td><?php echo $view; ?></td>
-                    <td><a href="<?php echo "/".$key."/".$id; ?>">View page</a></td>
+                    <td><a href="<?php echo "/" . $key . "/" . $id; ?>">View page</a></td>
                 </tr>
                 <?php endforeach; ?>
                 <?php endforeach; ?>

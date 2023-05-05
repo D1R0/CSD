@@ -85,6 +85,11 @@ $routes->add('/download', 'GET', function () {
     $services = new ServerControler();
     return $services->download();
 });
+$routes->add('/download', 'GET', function () {
+    $services = new ServerControler();
+    return $services->download();
+});
+
 
 function render($view, $param = [])
 {
