@@ -218,7 +218,13 @@ class ServerControler
     public function downloadTimpi()
     {
         $file_url = '/data/concurentiTimp.csv';
-        $file_contents = file_get_contents($file_url);
-        return $file_contents;
+        header("Cache-Control: public");
+        header("Content-Description: File Transfer");
+        header("Content-Disposition: attachment; filename=$file_url");
+        header("Content-Type: application/zip");
+        header("Content-Transfer-Encoding: binary");
+
+        // read the file from disk
+        readfile($file_url);
     }
 }

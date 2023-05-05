@@ -68,3 +68,22 @@ function clearDatas() {
     $(".popup").hide();
   });
 }
+function downloadTimpi() {
+  fetch("/concurentiTimp.csv")
+    .then((response) => response.blob())
+    .then((blob) => {
+      // create a URL for the blob object
+      const url = window.URL.createObjectURL(blob);
+
+      // create a link element and click it to download the file
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "concurentiTimp.csv";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      // release the URL object
+      window.URL.revokeObjectURL(url);
+    });
+}
