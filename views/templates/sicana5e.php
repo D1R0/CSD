@@ -71,7 +71,55 @@
                 </label>
             </div>
         </div>
+        <div class="checkButtons my-5 justify-content-end d-flex w-100" id="Elementul 4">
+            <div class="jalon mx-2">
+                <label>
+                    E4_1
+                    <input type="checkbox" name="option4" value="Option 4" data-penalizare="5" id="E41">
+                </label>
+
+            </div>
+            <div class="jalon mx-2">
+
+                <label>
+                    E4_2
+                    <input type="checkbox" name="option5" value="Option 5" data-penalizare="10" id="E42">
+                </label>
+            </div>
+            <div class="jalon mx-2">
+
+                <label>
+                    E4_3
+                    <input type="checkbox" name="option6" value="Option 6" data-penalizare="10" id="E43">
+                </label>
+            </div>
+
+        </div>
+        <div class="checkButtons my-5 d-flex w-100" id="Elementul 5">
+            <div class="jalon mx-2">
+                <label>
+                    E5_3
+                    <input type="checkbox" name="option4" value="Option 4" data-penalizare="5" id="E53">
+                </label>
+
+            </div>
+            <div class="jalon mx-2">
+
+                <label>
+                    E5_2
+                    <input type="checkbox" name="option5" value="Option 5" data-penalizare="10" id="E52">
+                </label>
+            </div>
+            <div class="jalon mx-2">
+
+                <label>
+                    E5_1
+                    <input type="checkbox" name="option6" value="Option 6" data-penalizare="10" id="E51">
+                </label>
+            </div>
+        </div>
         <hr>
     </div>
+
     <?php include "views/components/postFooter.php" ?>
 </div>

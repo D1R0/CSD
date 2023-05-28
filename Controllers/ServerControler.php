@@ -7,26 +7,41 @@ use ZipArchive;
 
 class ServerControler
 {
+    protected $queuePlayerDir;
     protected $sesPlayerDir;
     protected $istoricDir;
     protected $penalizariDir;
+    protected $settings;
     function __construct()
     {
+        $this->queuePlayerDir = "data/queue.txt";
         $this->sesPlayerDir = "data/sessionPlayer.txt";
         $this->istoricDir = "data/istoric.log";
         $this->penalizariDir = "data/penalizari.txt";
+        $jsonString = file_get_contents('Controllers/settings.json');
+        $this->settings = json_decode($jsonString, true);
     }
     function apiServices()
     {
         if (isset($_POST["command"])) {
             if (($_POST["command"]) == "playerActive") {
-                $myfile = fopen($this->sesPlayerDir, "w");
-                $txt = $_POST["active"];
-                fwrite($myfile, $txt);
-                fclose($myfile);
-                $this->writeLog("======== concurent:" . $txt);
-                header('Content-Type: application/json; charset=utf-8');
-                echo json_encode($this->getActivePlayer());
+                if ($this->settings['type'] == "start->stop") {
+                    $myfile = fopen($this->queuePlayerDir, "r+");
+                    $txt = count(explode(",", fread($myfile, filesize($this->queuePlayerDir) > 0 ?  filesize($this->queuePlayerDir) : 1))) . "=" . $_POST["active"];
+                    fwrite($myfile, $txt . ",");
+                    fclose($myfile);
+                    $this->writeLog("======== concurent:" . $txt);
+                    header('Content-Type: application/json; charset=utf-8');
+                    echo json_encode($this->getActivePlayer());
+                } else {
+                    $myfile = fopen($this->sesPlayerDir, "w");
+                    $txt = $_POST["active"];
+                    fwrite($myfile, $txt);
+                    fclose($myfile);
+                    $this->writeLog("======== concurent:" . $txt);
+                    header('Content-Type: application/json; charset=utf-8');
+                    echo json_encode($this->getActivePlayer());
+                }
             }
             if (($_POST["command"]) == "clearDb") {
 
@@ -128,9 +143,9 @@ class ServerControler
         $success = false;
         $users = [
             "user1" => [
-                "id" => "sicana",
-                "pass" => "sicanacsd23",
-                "role" => "sicana"
+                "id" => "operator",
+                "pass" => "operatorcsd23",
+                "role" => "post"
             ],
             "user2" => [
                 "id" => "jalon",
@@ -182,16 +197,23 @@ class ServerControler
                 23 => "templates/opturi",
             ]
         ];
-        $posturiSanmihai = [
-            "sicana" => [
-                1 => "templates/sicanaView",
+        $posturi = [
+            "post" => [
+                1 => "templates/s2sj",
+                2 => "templates/4sj",
+                3 => "templates/3sj",
+                4 => "templates/2sj",
+                5 => "templates/5sj",
+                6 => "templates/4sj",
+                7 => "templates/5sj",
+                8 => "templates/4sj",
+                9 => "templates/5sj",
+                10 => "templates/2sj",
+                11 => "templates/sicana5e",
+                12 => "templates/sicanaView",
             ],
-            "opt" => [
-                1 => "templates/opturi",
-                2 => "templates/opturi",
-            ]
         ];
-        return $posturiSanmihai;
+        return $posturi;
     }
     public function download()
     {
@@ -220,5 +242,50 @@ class ServerControler
         $file_url = '/concurentiTimp.csv';
         $file_contents = file_get_contents($file_url);
         return $file_contents;
+    }
+    public function showQueue()
+    {
+        $list = [];
+        $fileContents = file_get_contents('data/queue.txt');
+        $items = explode(",", $fileContents);
+        foreach ($items as $item) {
+            if ($item != "") {
+                $list[explode("=", $item)[0]] = explode("=", $item)[1];
+            }
+        }
+        $jsonData = json_encode($list);
+        header('Content-Type: application/json');
+        return $jsonData;
+    }
+    public function clearQueue()
+    {
+        $file = $this->queuePlayerDir;
+        $content = '';
+        file_put_contents($file, $content);
+        print_r("success");
+    }
+    public function install()
+    {
+        $this->queuePlayerDir = "data/queue.txt";
+        $this->sesPlayerDir = "data/sessionPlayer.txt";
+        $this->istoricDir = "data/istoric.log";
+        $this->penalizariDir = "data/penalizari.txt";
+
+        if (!file_exists($this->queuePlayerDir)) {
+            file_put_contents($this->queuePlayerDir, "");
+        }
+
+        if (!file_exists($this->sesPlayerDir)) {
+            file_put_contents($this->sesPlayerDir, "");
+        }
+
+        if (!file_exists($this->istoricDir)) {
+            file_put_contents($this->istoricDir, "");
+        }
+
+        if (!file_exists($this->penalizariDir)) {
+            file_put_contents($this->penalizariDir, "");
+        }
+        return true;
     }
 }

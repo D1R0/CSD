@@ -1,36 +1,26 @@
 const SERVER_URL = "/api/services";
-$(function () {
-  $(".next").on("click", function () {
-    if (active < $("#data-table tr").length) {
-      active += 1;
-      activeFunc(active);
-    }
-  });
-  $(".back").on("click", function () {
-    if (active > 1) {
-      active -= 1;
-      activeFunc(active);
-    }
-  });
+const clearQueue = "/api/clearQueue";
+$j(function () {
+
   logInit();
 });
 function activeFunc(active) {
-  $("#data-table tr").each(function () {
-    $(this).removeClass("highlight");
+  $j("#data-table tr").each(function () {
+    $j(this).removeClass("highlight");
   });
-  $("#stopwatch #time").text("00:00:00");
-  concurent = $("#data-table tr")[active];
-  $(concurent).addClass("highlight");
-  nrConc = $($(concurent).children()[0]).text();
-  numeConc = $($(concurent).children()[1]).text();
-  numePilot = $($(concurent).children()[2]).text();
-  auto = $($(concurent).children()[3]).text();
-  grupa = $($(concurent).children()[4]).text();
-  $(".activeRow .active .nrConc").text(nrConc);
-  $(".activeRow .active .numeConc").text(numeConc);
-  $(".activeRow .active .numePilot").text(numePilot);
-  $(".activeRow .active .auto").text(auto);
-  $(".activeRow .active .clasa").text(grupa);
+  $j("#stopwatch #time").text("00:00:00");
+  concurent = $j("#data-table tr")[active];
+  $j(concurent).addClass("highlight");
+  nrConc = $j($j(concurent).children()[0]).text();
+  numeConc = $j($j(concurent).children()[1]).text();
+  numePilot = $j($j(concurent).children()[2]).text();
+  auto = $j($j(concurent).children()[3]).text();
+  grupa = $j($j(concurent).children()[4]).text();
+  $j(".activeRow .active .nrConc").text(nrConc);
+  $j(".activeRow .active .numeConc").text(numeConc);
+  $j(".activeRow .active .numePilot").text(numePilot);
+  $j(".activeRow .active .auto").text(auto);
+  $j(".activeRow .active .clasa").text(grupa);
 }
 
 let startTime;
@@ -44,16 +34,16 @@ function start() {
     startTime = new Date();
     updateTime = setInterval(update, 10);
     document.getElementById("start").innerHTML = "Stop";
-    $.post(SERVER_URL, { command: "clean" }, function (response) {
+    $j.post(SERVER_URL, { command: "clean" }, function (response) {
       console.log("updated");
     });
   } else {
     running = false;
     clearInterval(updateTime);
     document.getElementById("start").innerHTML = "Start";
-    $.post(
+    $j.post(
       SERVER_URL,
-      { command: "timp", timp: $("#time").text() },
+      { command: "timp", timp: $j("#time").text() },
       function (response) {
         console.log("updated");
       }
@@ -61,7 +51,7 @@ function start() {
   }
 }
 function timeFinal(time) {
-  $.post(url, { command: "timp", time: time }, function (response) {
+  $j.post(url, { command: "timp", time: time }, function (response) {
     console.log(response);
   });
 }
@@ -85,7 +75,7 @@ function reset() {
   document.getElementById("start").innerHTML = "Start";
 }
 
-$(".start").on("click", start);
+$j(".start").on("click", start);
 
 function exportCSV() {
   // Create a CSV string from the table data
@@ -111,16 +101,16 @@ function exportCSV() {
 }
 
 function logInit() {
-  if ($(".localLog").length > 0) {
-    $(".localLog").height($(document).height() - $(".localLog").offset().top);
+  if ($j(".localLog").length > 0) {
+    $j(".localLog").height($j(document).height() - $j(".localLog").offset().top);
   }
 }
 
 function login() {
-  username = $(".username").val();
-  password = $(".password").val();
+  username = $j(".username").val();
+  password = $j(".password").val();
   data = { username: username, password: password };
-  $.post(
+  $j.post(
     SERVER_URL,
     { command: "startSession", data: data },
     function (response) {
@@ -133,14 +123,14 @@ function login() {
           newPathname += "/";
           newPathname += pathArray[i];
         }
-        $("#div_session_write").load(
+        $j("#div_session_write").load(
           "/views/auth.php?user=" +
             responseObject[0]["user"] +
             "&role=" +
             responseObject[0]["role"]
         );
       } else {
-        $(".response").text("Datele sunt incorecte");
+        $j(".response").text("Datele sunt incorecte");
       }
     }
   );

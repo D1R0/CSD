@@ -4,15 +4,14 @@
         <div class="details">
             <p>concurent pe traseu</p>
             <p class="concurentActiv">
-                <?php $fileName = "data/sessionPlayer.txt";
-                $myfile = fopen($fileName, "r") or die("Unable to open file!");
-                $player = fread($myfile, filesize($fileName));
-                fclose($myfile);
-                echo $player; ?>
+                -
             </p>
         </div>
-        <a class="btn btn-success" onclick="downloadTimpi()">Export Timpi</a>
-        <button class="btn btn-danger clearData" onclick="$('.popup').show()">Wipe</button>
+        <div class="buttons">
+            <a class="btn btn-success" onclick="downloadTimpi()">Export Timpi</a>
+            <button class="btn btn-danger clearData" onclick="$('.popup').show()">Wipe</button>
+            <button class="btn btn-info clearQueue">Goleste Caoda</button>
+        </div>
         <!-- <a class="btn btn-success" href="/download">Export Data</a> -->
         <div class="popup bg-light p-5">
             <p>Esti sigur?</p>
@@ -22,6 +21,7 @@
                 <button class="btn btn-warning m-2" onclick="$('.popup').hide()">Nu</button>
             </div>
         </div>
+
     </div>
     <div class="posturiSchema w-50">
 
@@ -36,14 +36,14 @@
             </thead>
             <tbody>
                 <?php foreach ($posturi as $key => $value) : ?>
-                <?php foreach ($value as $id => $view) : ?>
-                <tr>
-                    <td><?php echo $key; ?></td>
-                    <td><?php echo $id; ?></td>
-                    <td><?php echo $view; ?></td>
-                    <td><a href="<?php echo "/" . $key . "/" . $id; ?>">View page</a></td>
-                </tr>
-                <?php endforeach; ?>
+                    <?php foreach ($value as $id => $view) : ?>
+                        <tr>
+                            <td><?php echo $key; ?></td>
+                            <td><?php echo $id; ?></td>
+                            <td><?php echo $view; ?></td>
+                            <td><a href="<?php echo "/" . $key . "/" . $id; ?>">View page</a></td>
+                        </tr>
+                    <?php endforeach; ?>
                 <?php endforeach; ?>
             </tbody>
         </table>

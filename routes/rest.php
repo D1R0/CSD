@@ -6,13 +6,13 @@ use App\Config\Routes\Routes;
 session_start();
 $routes = new Routes();
 
-$routes->add('/sicana/{id}', 'GET', function ($id) {
+$routes->add('/post/{id}', 'GET', function ($id) {
     $services = new ServerControler();
     $posturi = $services->posturi();
-    if (in_array($id, array_keys($posturi["sicana"]))) {
+    if (in_array($id, array_keys($posturi["post"]))) {
         if (isset($_SESSION['role'])) {
-            if ($_SESSION['role'] == "sicana" || $_SESSION['role'] == "admin") {
-                render($posturi["sicana"][$id], ['id' => $id, 'type' => "Sicana"]);
+            if ($_SESSION['role'] == "post" || $_SESSION['role'] == "admin") {
+                render($posturi["post"][$id], ['id' => $id, 'type' => "Post"]);
             } else {
                 render("logout");
             }
@@ -21,21 +21,7 @@ $routes->add('/sicana/{id}', 'GET', function ($id) {
         }
     }
 });
-$routes->add('/opturi/{id}', 'GET', function ($id) {
-    $services = new ServerControler();
-    $posturi = $services->posturi();
-    if (in_array($id,  array_keys($posturi["opt"]))) {
-        if (isset($_SESSION['role'])) {
-            if ($_SESSION['role'] == "jalon" || $_SESSION['role'] == "admin") {
-                render($posturi["opt"][$id], ['id' => $id, 'type' => "Opt"]);
-            } else {
-                render("logout");
-            }
-        } else {
-            render("login");
-        }
-    }
-});
+
 $routes->add('/mod', 'GET', function () {
     if (isset($_SESSION['role'])) {
         if ($_SESSION['role'] == "mod" || $_SESSION['role'] == "admin") {
@@ -75,6 +61,10 @@ $routes->add('/start-stop', 'GET', function () {
 $routes->add('/auth', 'GET', function () {
     render("auth");
 });
+$routes->add('/install', 'GET', function () {
+    $installer = (new ServerControler)->install();
+    render("install", ["installer" => $installer]);
+});
 $routes->add('/', 'GET', function () {
     render("onlyview");
 });
@@ -97,14 +87,27 @@ $routes->add('/downloadTimpi', 'GET', function () {
 
 function render($view, $param = [])
 {
-
+    echo "<html>";
     require_once("components/header.php");
     extract($param);
+    echo "<body>";
+
     require_once('views/' . $view . '.php');
+    echo "</body>";
+
     require_once("components/footer.php");
+    echo "</html>";
 }
 $routes->add('/api/services', 'POST', function () {
     $services = new ServerControler();
     print_r($services->apiServices());
+});
+$routes->add('/api/queue', 'POST', function () {
+    $services = new ServerControler();
+    print_r($services->showQueue());
+});
+$routes->add('/api/clearQueue', 'POST', function () {
+    $services = new ServerControler();
+    print_r($services->clearQueue());
 });
 $routes->dispatch();
