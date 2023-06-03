@@ -1,5 +1,6 @@
 <div class="allContainer position-relative">
     <?php include "views/components/postHead.php" ?>
+    <?php include "views/components/missEntry.php" ?>
 
     <div class="checkButtons text-center">
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

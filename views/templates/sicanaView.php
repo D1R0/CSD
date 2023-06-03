@@ -1,5 +1,7 @@
 <div class="allContainer">
     <?php include "views/components/postHead.php" ?>
+    <?php include "views/components/missEntry.php" ?>
+
     <div class="sicanaSectiune mx-2">
         <div class="checkButtons my-5 d-flex w-100" id="Elementul 1">
             <div class="jalon mx-2">

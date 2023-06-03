@@ -10,7 +10,7 @@
         <div class="buttons">
             <a class="btn btn-success" onclick="downloadTimpi()">Export Timpi</a>
             <button class="btn btn-danger clearData" onclick="$('.popup').show()">Wipe</button>
-            <button class="btn btn-info clearQueue">Goleste Caoda</button>
+            <button class="btn btn-info clearQueue">Goleste Coada</button>
         </div>
         <!-- <a class="btn btn-success" href="/download">Export Data</a> -->
         <div class="popup bg-light p-5">

@@ -10,27 +10,27 @@ const adminHandler = {
   clearQueue: function(){}
 }
 
-// fetch("../data/concurenti.csv")
-//   .then((response) => response.text())
-//   .then((csv) => {
-//     Papa.parse(csv, {
-//       header: true,
-//       dynamicTyping: true,
-//       complete: function (results) {
-//         data = results.data;
-//         console.log(data)
-//         data.forEach((concurent) => {
-//           $j(".activePlayer").append(
-//             "<option>" +
-//             Object.values(concurent)[0] +
-//               " " +
-//               Object.values(concurent)[1] +
-//               "</option>"
-//           );
-//         });
-//       },
-//     });
-//   });
+fetch("../data/concurenti.csv")
+  .then((response) => response.text())
+  .then((csv) => {
+    Papa.parse(csv, {
+      header: true,
+      dynamicTyping: true,
+      complete: function (results) {
+        data = results.data;
+        console.log(data)
+        data.forEach((concurent) => {
+          $j(".activePlayer").append(
+            "<option>" +
+            Object.values(concurent)[0] +
+              " " +
+              Object.values(concurent)[1] +
+              "</option>"
+          );
+        });
+      },
+    });
+  });
 function sendPlayer() {
   playerActive = $j(".activePlayer").val();
   $j.post(

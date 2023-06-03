@@ -14,10 +14,11 @@
                     fclose($myfile);
                     echo $player; ?>
                 </h3> -->
-                <div class="d-flex flex-wrap justify-content-center selector align-items-center">
-                    <div class="col-6 border preview">-</div>
-                    <div class="col-8 border actual">-</div>
-                    <div class="col-6 border next">-</div>
+                <div class="d-flex flex-wrap justify-content-center selector align-items-center position-relative">
+                    <i class="fa-regular fa-circle-check position-absolute end-0 m-4 font-size-20" onClick="confirmation()"></i>
+                    <div class="col-6 cellSelector preview">-</div>
+                    <div class="col-8 cellSelector actual">-</i></div>
+                    <div class="col-6 cellSelector next">-</div>
                 </div>
             </div>
 

@@ -2,12 +2,15 @@
 
 namespace App\Controllers\ServerControler;
 
+use DateTime;
+use DateTimeImmutable;
 use ZipArchive;
 
 
 class ServerControler
 {
     protected $queuePlayerDir;
+    protected $start_sosire;
     protected $sesPlayerDir;
     protected $istoricDir;
     protected $penalizariDir;
@@ -15,6 +18,7 @@ class ServerControler
     function __construct()
     {
         $this->queuePlayerDir = "data/queue.txt";
+        $this->start_sosire = "data/start_sosire.txt";
         $this->sesPlayerDir = "data/sessionPlayer.txt";
         $this->istoricDir = "data/istoric.log";
         $this->penalizariDir = "data/penalizari.txt";
@@ -92,7 +96,103 @@ class ServerControler
                 fclose($file);
                 $this->writeLog("trecere la " .  $data["sectiune"] . " penalizari: " . implode(",", $penalties) . " Total secunde " . $data["total"]);
             }
+            if ($_POST["command"] == "process") {
+                $data = $_POST["data"];
+                if ($data['post'] != "start" && $data['post'] != "sosire") {
+                    $elements = isset($data["elemente"]) ? implode(",", $data["elemente"]) : "0";
+                    $this->writePenalties($data);
+                    $this->writeLog("Concurent:" .  $data["concurent"] . ", Post:" .  $data["post"] . ", elemente lovite:" . $elements . ", Total secunde:" . $data["total"]);
+                } else if ($data['post'] == "sosire") {
+                    $stopTime = DateTimeImmutable::createFromFormat('U.u', sprintf('%.6F', microtime(true)))->format('Y-m-d H:i:s.u');
+                    $resume = $this->calculateTimeDiffAndPenalties($stopTime, $data);
+                    $this->writeLog("Concurent stop:" .  $data["concurent"]);
+                    $new_value = $resume['timeDiff'];
+                    $totalPenalizari = $resume['penalties'];
+                    $row_identifier = $this->getPlayerNumber($data["concurent"]);
+                    $this->replace_value("data/concurentiTimp.csv", $row_identifier, $new_value, $totalPenalizari);
+                } else {
+                    $this->writeStart($data);
+                    $this->writeLog("Concurent start:" .  $data["concurent"]);
+                }
+            }
         }
+    }
+    function writeStart($data)
+    {
+        $indexC = $data['concurent'];
+        $type = $data['post'];
+        $time = DateTimeImmutable::createFromFormat('U.u', sprintf('%.6F', microtime(true)))->format('Y-m-d H:i:s.u');
+        $logString = $type . '_' . $indexC . '_' . $time . ", ";
+
+        $lines = file($this->start_sosire, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        $updatedLines = [];
+
+        $isExistingEntry = false;
+        foreach ($lines as $line) {
+            $lineParts = explode('_', $line);
+            if ($lineParts[0] === $type && $lineParts[1] === $indexC) {
+                $updatedLines[] = $logString; // Overwrite the existing entry
+                $isExistingEntry = true;
+            } else {
+                $updatedLines[] = $line;
+            }
+        }
+
+        if (!$isExistingEntry) {
+            $updatedLines[] = $logString;
+        }
+
+        $file = fopen($this->start_sosire, 'w');
+        fwrite($file, implode("\n", $updatedLines));
+        fclose($file);
+    }
+
+    function calculateTimeDiffAndPenalties($stopTime, $data)
+    {
+        $startTime = '';
+        $indexC = $data['concurent'];
+        $logLines = file($this->start_sosire, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+        foreach ($logLines as $line) {
+            $lineParts = explode('_', $line);
+            if ($lineParts[1] === $indexC) {
+                $startTime = $lineParts[2];
+                break;
+            }
+        }
+        $startTimeNew = str_replace(", ", "", $startTime);
+        $startTimeObj = DateTimeImmutable::createFromFormat('Y-m-d H:i:s.u', $startTimeNew);
+        $stopTimeObj = DateTimeImmutable::createFromFormat('Y-m-d H:i:s.u', $stopTime);
+        $diff = $stopTimeObj->diff($startTimeObj);
+        $minutes = ($diff->days * 24 * 60) + ($diff->h * 60) + $diff->i;
+        $seconds = $diff->s;
+        $milliseconds = floor($diff->f * 1000);
+        $finalFormatTime = sprintf('%d:%02d.%03d', $minutes, $seconds, $milliseconds);
+        $penalties = 0;
+        $penaltiesLines = file($this->penalizariDir, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        foreach ($penaltiesLines as $line) {
+            $lineParts = explode('_', $line);
+            if ($lineParts[0] === $indexC) {
+                $penalties += intval($lineParts[1]);
+            }
+        }
+
+        $formattedPenalties = sprintf('%02d:%02d.00', floor($penalties / 60), $penalties % 60);
+        return [
+            'timeDiff' => $finalFormatTime,
+            'penalties' => $formattedPenalties
+        ];
+    }
+    function writePenalties($data)
+    {
+        $indexC = $data['concurent'];
+
+        $penalties = $data['total'];
+        $file = fopen($this->penalizariDir, 'a');
+        fwrite($file, $indexC . "_" . $penalties . "\n");
+        fclose($file);
+
+        return $penalties;
     }
     function getActivePlayer()
     {
@@ -104,6 +204,7 @@ class ServerControler
     }
     function replace_value($csv_file, $row_identifier, $new_value, $totalPenalizari)
     {
+        echo  $row_identifier;
         $temp_file = tempnam(sys_get_temp_dir(), 'csv');
 
         $file = new \SplFileObject($csv_file, 'r');
@@ -112,8 +213,9 @@ class ServerControler
 
         while (!$file->eof()) {
             $row = $file->fgetcsv();
+            echo $row[0];
             if ($row[0] == $row_identifier) {
-                echo $row[0];
+
                 $row[5] = $new_value;
                 $row[6] = $totalPenalizari;
                 print_r($row);
@@ -127,8 +229,21 @@ class ServerControler
         unlink($csv_file);
         rename($temp_file, $csv_file);
 
-        // Return true to indicate success
         return true;
+    }
+    function getPlayerNumber($id)
+    {
+        $fileName = $this->queuePlayerDir;
+        $myfile = fopen($fileName, "r") or die("Unable to open file!");
+        $queue = fread($myfile,  filesize($this->queuePlayerDir) > 0 ?  filesize($this->queuePlayerDir) : 1);
+        $pattern = "/{$id}=(\d+)/";
+        preg_match($pattern, $queue, $matches);
+
+        if (isset($matches[1])) {
+            return $matches[1];
+        }
+
+        return null; // Return null if player number is not found
     }
 
     function writeLog($string)
@@ -211,6 +326,8 @@ class ServerControler
                 10 => "templates/2sj",
                 11 => "templates/sicana5e",
                 12 => "templates/sicanaView",
+                "start" => "templates/start",
+                "sosire" => "templates/sosire",
             ],
         ];
         return $posturi;
@@ -270,7 +387,7 @@ class ServerControler
         $this->sesPlayerDir = "data/sessionPlayer.txt";
         $this->istoricDir = "data/istoric.log";
         $this->penalizariDir = "data/penalizari.txt";
-
+        $this->start_sosire = "data/start_sosire.txt";
         if (!file_exists($this->queuePlayerDir)) {
             file_put_contents($this->queuePlayerDir, "");
         }
@@ -285,6 +402,9 @@ class ServerControler
 
         if (!file_exists($this->penalizariDir)) {
             file_put_contents($this->penalizariDir, "");
+        }
+        if (!file_exists($this->start_sosire)) {
+            file_put_contents($this->start_sosire, "");
         }
         return true;
     }

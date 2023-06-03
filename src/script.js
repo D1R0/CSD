@@ -1,7 +1,6 @@
 const SERVER_URL = "/api/services";
 const clearQueue = "/api/clearQueue";
 $j(function () {
-
   logInit();
 });
 function activeFunc(active) {
@@ -27,7 +26,6 @@ let startTime;
 let stopTime;
 let running = false;
 let updateTime;
-
 function start() {
   if (!running) {
     running = true;
@@ -102,7 +100,9 @@ function exportCSV() {
 
 function logInit() {
   if ($j(".localLog").length > 0) {
-    $j(".localLog").height($j(document).height() - $j(".localLog").offset().top);
+    $j(".localLog").height(
+      $j(document).height() - $j(".localLog").offset().top
+    );
   }
 }
 
@@ -134,4 +134,71 @@ function login() {
       }
     }
   );
+}
+function confirmation() {
+  total = uncheckAllCheckboxes();
+  postId = $(".header").attr("data-post");
+  data = {
+    
+    concurent: selector.actual,
+    total: total["value"],
+    post: postId,
+    elemente: total["elements"],
+  };
+  if (selector.actual == selector.last) {
+    let element = $(".actual");
+    element.addClass("confirmation");
+  } else {
+    selector.next();
+  }
+  generateHTMLString(data)
+  $.post(SERVER_URL,{data,command:"process"},function(response){
+
+  })
+}
+
+function uncheckAllCheckboxes() {
+  allPenalties = sumCheckedPenalizare();
+  $(".allContainer").find('input[type="checkbox"]').prop("checked", false);
+  return allPenalties;
+}
+function sumCheckedPenalizare() {
+  let sum = 0;
+  allPenalties = { value: 0, elements: [] };
+  $('.allContainer input[type="checkbox"]:checked').each(function () {
+    allPenalties["elements"].push($(this).attr("id"));
+    let penalizareValue = parseInt($(this).data("penalizare"));
+    console.log(penalizareValue);
+    if (!isNaN(penalizareValue)) {
+      sum += penalizareValue;
+    }
+  });
+  allPenalties["value"] = sum;
+  return allPenalties;
+}
+
+function generateHTMLString(data) {
+  let htmlString = '<p>';
+  htmlString += 'Concurent: ' + data.concurent + '';
+  htmlString += ' Total: ' + data.total + '';
+  htmlString += ' Post: ' + data.post + '';
+  htmlString += ' Elemente: ' + data.elemente + '';
+  
+  htmlString += '</p>';
+  $(".localLog").prepend(htmlString)
+}
+function trecereStart(button) {
+  button.disabled = true; // Disable the button
+  confirmation();
+  setTimeout(function () {
+    button.disabled = false; // Enable the button after 5 seconds
+  }, 5000);
+}
+
+function trecereSosire(button) {
+  button.disabled = true; // Disable the button
+  confirmation();
+  setTimeout(function () {
+    button.disabled = false; // Enable the button after 5 seconds
+  }, 5000);
 }

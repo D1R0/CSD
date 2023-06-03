@@ -1,11 +1,13 @@
 <div class="allContainer">
     <?php include "views/components/postHead.php" ?>
+    <?php include "views/components/missEntry.php" ?>
+
     <div class="sicanaSectiune mx-2">
         <div class="checkButtons my-5 d-flex w-100" id="Elementul 1">
             <div class="jalon mx-2">
                 <label>
                     E1_3
-                    <input type="checkbox" name="option4" value="Option 4" data-penalizare="5" id="E13">
+                    <input type="checkbox" name="option4" value="Option 4" data-penalizare="10" id="E13">
                 </label>
 
             </div>
@@ -20,7 +22,7 @@
 
                 <label>
                     E1_1
-                    <input type="checkbox" name="option6" value="Option 6" data-penalizare="10" id="E11">
+                    <input type="checkbox" name="option6" value="Option 6" data-penalizare="5" id="E11">
                 </label>
             </div>
         </div>
@@ -52,7 +54,7 @@
             <div class="jalon mx-2">
                 <label>
                     E3_3
-                    <input type="checkbox" name="option4" value="Option 4" data-penalizare="5" id="E33">
+                    <input type="checkbox" name="option4" value="Option 4" data-penalizare="10" id="E33">
                 </label>
 
             </div>
@@ -67,7 +69,7 @@
 
                 <label>
                     E3_1
-                    <input type="checkbox" name="option6" value="Option 6" data-penalizare="10" id="E31">
+                    <input type="checkbox" name="option6" value="Option 6" data-penalizare="5" id="E31">
                 </label>
             </div>
         </div>
@@ -99,7 +101,7 @@
             <div class="jalon mx-2">
                 <label>
                     E5_3
-                    <input type="checkbox" name="option4" value="Option 4" data-penalizare="5" id="E53">
+                    <input type="checkbox" name="option4" value="Option 4" data-penalizare="10" id="E53">
                 </label>
 
             </div>
@@ -114,7 +116,7 @@
 
                 <label>
                     E5_1
-                    <input type="checkbox" name="option6" value="Option 6" data-penalizare="10" id="E51">
+                    <input type="checkbox" name="option6" value="Option 6" data-penalizare="5" id="E51">
                 </label>
             </div>
         </div>

@@ -25,14 +25,19 @@ const selector = {
         selector.last=lastIndex
         $j(".next").text(selector.listOfQueue[lastIndex]);
       }else if($j(".next").hasClass("invisible") &&  selector.last!=Object.keys(selector.listOfQueue).length){
+        let element = $('.actual'); 
+        element.removeClass('confirmation');
         console.log(selector.last+" "+selector.listOfQueue[lastIndex])
         $j(".next").toggleClass("invisible")
         $j(".next").text(selector.listOfQueue[lastIndex]);
         selector.last=lastIndex
+        selector.next()
       }
     });
   },
   next: function(){
+    let element = $('.actual'); 
+    element.removeClass('confirmation');
     nextElem= selector.actual+1
     if (typeof  selector.listOfQueue[nextElem] != "undefined"){
       $j(".preview").text( selector.listOfQueue[selector.actual]);
@@ -50,6 +55,8 @@ const selector = {
     }
   },
   preview: function(){
+    let element = $('.actual'); 
+    element.removeClass('confirmation');
     previewElem= selector.actual-1
     if (typeof previewElem != "undefined"){
       $j(".next").text(  selector.listOfQueue[selector.actual]);
@@ -63,7 +70,6 @@ const selector = {
     }
     if($j(".next").hasClass("invisible")){
       $j(".next").toggleClass("invisible")
-
     }
   }
 };

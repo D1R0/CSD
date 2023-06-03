@@ -39,6 +39,7 @@ tr {
     padding: 10px;
   }
 }
+
 .popup {
   display: none;
   position: fixed;
@@ -58,4 +59,12 @@ tr {
 }
 .localLog {
   overflow-y: auto;
+}
+.confirmation {
+  background-color: lightgreen;
+  border: 1px solid green;
+}
+.cellSelector {
+  border: 1px solid rgb(81, 81, 81) !important;
+
 }
