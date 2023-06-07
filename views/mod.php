@@ -1,5 +1,6 @@
 <div class="pannel w-100 bg-light p-5 text-center">
     <h2 class="showPlayer">Selecteaza un concurent si apasa trimire</h2>
+    <h3 class="active"></h3>
     <select name="" class="activePlayer form-select" aria-label="Default select example"></select>
     <button class="btn btn-success m-5" onclick="sendPlayer()">Trimite</button>
 </div>

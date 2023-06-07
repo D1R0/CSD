@@ -50,9 +50,14 @@ class ServerControler
             if (($_POST["command"]) == "clearDb") {
 
                 unlink("data/concurentiTimp.csv");
-                unlink($this->istoricDir);
-                copy("data/concurentiOrigin.csv", "data/concurentiTimp.csv");
-                $myfile = fopen($this->istoricDir, "w");
+
+                copy("data/concurenti.csv", "data/concurentiTimp.csv");
+
+                $myfile = fopen($this->penalizariDir, "w");
+                fclose($myfile);
+                $myfile = fopen($this->start_sosire, "w");
+                fclose($myfile);
+                $myfile = fopen($this->queuePlayerDir, "w");
                 fclose($myfile);
             }
             if ($_POST["command"] == "read") {
@@ -169,12 +174,25 @@ class ServerControler
         $milliseconds = floor($diff->f * 1000);
         $finalFormatTime = sprintf('%d:%02d.%03d', $minutes, $seconds, $milliseconds);
         $penalties = 0;
-        $penaltiesLines = file($this->penalizariDir, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        foreach ($penaltiesLines as $line) {
-            $lineParts = explode('_', $line);
-            if ($lineParts[0] === $indexC) {
+        $penaltiesFile = $this->penalizariDir;
+
+        if (file_exists($penaltiesFile)) {
+            $lines = file($penaltiesFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+            // Find and remove the matching line
+            $updatedLines = array_filter($lines, function ($line) use ($indexC) {
+                $lineParts = explode('_', $line);
+                return $lineParts[0] !== $indexC;
+            });
+
+            // Calculate penalties from the remaining lines
+            foreach ($lines as $line) {
+                $lineParts = explode('_', $line);
                 $penalties += intval($lineParts[1]);
             }
+
+            // Write the updated lines back to the file
+            file_put_contents($penaltiesFile, implode("\n", $updatedLines));
         }
 
         $formattedPenalties = sprintf('%02d:%02d.00', floor($penalties / 60), $penalties % 60);
@@ -332,33 +350,23 @@ class ServerControler
         ];
         return $posturi;
     }
-    public function download()
-    {
-        $zip = new ZipArchive();
 
-        $zip_filename = 'archive.zip';
-
-        if ($zip->open($zip_filename, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== TRUE) {
-            die("Failed to create archive\n");
-        }
-
-        $zip->addFile('../data/concurentiTimp.csv');
-        $zip->addFile('../data/istoric.log');
-
-        $zip->close();
-
-        header('Content-Type: application/zip');
-        header('Content-disposition: attachment; filename=' . basename($zip_filename));
-        header('Content-Length: ' . filesize($zip_filename));
-
-        readfile($zip_filename);
-        unlink($zip_filename);
-    }
     public function downloadTimpi()
     {
-        $file_url = '/concurentiTimp.csv';
-        $file_contents = file_get_contents($file_url);
-        return $file_contents;
+        $file = 'data/concurentiTimp.csv';
+
+        if (file_exists($file)) {
+            // Set headers for file download
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="' . basename($file) . '"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file));
+            readfile($file);
+            exit;
+        }
     }
     public function showQueue()
     {

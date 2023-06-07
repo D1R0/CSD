@@ -33,6 +33,7 @@ fetch("../data/concurenti.csv")
   });
 function sendPlayer() {
   playerActive = $j(".activePlayer").val();
+  $j(".active").text(playerActive+ " a fost trimis")
   $j.post(
     SERVER_URL,
     { command: "playerActive", active: playerActive },
@@ -43,40 +44,42 @@ function sendPlayer() {
 }
 
 function clearDatas() {
-  fetch("/data/concurentiTimp.csv")
-    .then((response) => response.blob())
-    .then((blob) => {
-      // create a URL for the blob object
-      const url = window.URL.createObjectURL(blob);
+  // fetch("/data/concurentiTimp.csv")
+  //   .then((response) => response.blob())
+  //   .then((blob) => {
+  //     // create a URL for the blob object
+  //     const url = window.URL.createObjectURL(blob);
 
-      // create a link element and click it to download the file
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "concurentiTimp.csv";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+  //     // create a link element and click it to download the file
+  //     const link = document.createElement("a");
+  //     link.href = url;
+  //     link.download = "concurentiTimp.csv";
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     document.body.removeChild(link);
 
-      // release the URL object
-      window.URL.revokeObjectURL(url);
-    });
-  fetch("/data/istoric.log")
-    .then((response) => response.blob())
-    .then((blob) => {
-      // create a URL for the blob object
-      const url = window.URL.createObjectURL(blob);
+  //     // release the URL object
+  //     window.URL.revokeObjectURL(url);
+  //   });
+  // fetch("/data/istoric.log")
+  //   .then((response) => response.blob())
+  //   .then((blob) => {
+  //     // create a URL for the blob object
+  //     const url = window.URL.createObjectURL(blob);
 
-      // create a link element and click it to download the file
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "istoric.log";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+  //     // create a link element and click it to download the file
+  //     const link = document.createElement("a");
+  //     link.href = url;
+  //     link.download = "istoric.log";
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     document.body.removeChild(link);
 
-      // release the URL object
-      window.URL.revokeObjectURL(url);
-    });
+  //     // release the URL object
+  //     window.URL.revokeObjectURL(url);
+  //   });
+  window.open(
+    "/download", "_blank");
   $j.post(SERVER_URL, { command: "clearDb" }, function (response) {
     $j(".popup").hide();
   });
