@@ -113,6 +113,8 @@ class ServerController
         $this->istoricDir = "data/istoric.log";
         $this->penalizariDir = "data/penalizari.txt";
         $this->start_sosire = "data/start_sosire.txt";
+        copy("data/concurenti.csv", "data/concurentiTimp.csv");
+
         if (!file_exists($this->queuePlayerDir)) {
             file_put_contents($this->queuePlayerDir, "");
         }
