@@ -1,13 +1,14 @@
 <?php
 
-use App\Controllers\ServerControler\ServerControler;
+use App\Controllers\ServerController\ServerController;
 use App\Config\Routes\Routes;
+use App\Controllers\ServicesController\ServicesController;
 
 session_start();
 $routes = new Routes();
 
 $routes->add('/post/{id}', 'GET', function ($id) {
-    $services = new ServerControler();
+    $services = new ServerController();
     $posturi = $services->posturi();
     if (in_array($id, array_keys($posturi["post"]))) {
         if (isset($_SESSION['role'])) {
@@ -37,7 +38,7 @@ $routes->add('/mod', 'GET', function () {
 $routes->add('/admin', 'GET', function () {
     if (isset($_SESSION['role'])) {
         if ($_SESSION['role'] == "admin") {
-            $services = new ServerControler();
+            $services = new ServerController();
             $posturi = $services->posturi();
             render("admin", ["posturi" => $posturi]);
         } else {
@@ -62,7 +63,7 @@ $routes->add('/auth', 'GET', function () {
     render("auth");
 });
 $routes->add('/install', 'GET', function () {
-    $installer = (new ServerControler)->install();
+    $installer = (new ServerController)->install();
     render("install", ["installer" => $installer]);
 });
 $routes->add('/', 'GET', function () {
@@ -73,7 +74,7 @@ $routes->add('/logout', 'GET', function () {
 });
 
 $routes->add('/download', 'GET', function () {
-    $services = new ServerControler();
+    $services = new ServicesController();
     return $services->downloadTimpi();
 });
 
@@ -93,15 +94,15 @@ function render($view, $param = [])
     echo "</html>";
 }
 $routes->add('/api/services', 'POST', function () {
-    $services = new ServerControler();
+    $services = new ServicesController();
     print_r($services->apiServices());
 });
 $routes->add('/api/queue', 'POST', function () {
-    $services = new ServerControler();
+    $services = new ServicesController();
     print_r($services->showQueue());
 });
 $routes->add('/api/clearQueue', 'POST', function () {
-    $services = new ServerControler();
+    $services = new ServicesController();
     print_r($services->clearQueue());
 });
 $routes->dispatch();
