@@ -1,7 +1,7 @@
 <div class="bg-light p-5 text-center">
     <form action="">
 
-        <input type="email" class="form-control m-2 username" placeholder="Username">
+        <input type="text" class="form-control m-2 username" placeholder="Username">
         <input type="password" class="form-control m-2 password" placeholder="Password">
         <button class="btn btn-success" type="submit" onclick="login()">Login</button>
     </form>
