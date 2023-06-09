@@ -1,5 +1,5 @@
 <div class="bg-light p-5 text-center">
-    <form action="#">
+    <form>
 
         <input type="text" class="form-control m-2 username" placeholder="Username">
         <input type="password" class="form-control m-2 password" placeholder="Password">
