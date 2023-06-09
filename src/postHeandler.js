@@ -25,14 +25,18 @@ const selector = {
         selector.last=lastIndex
         $j(".next").text(selector.listOfQueue[lastIndex]);
       }else if($j(".next").hasClass("invisible") &&  selector.last!=Object.keys(selector.listOfQueue).length){
-        let element = $('.actual'); 
+        if( $j('.actual').hasClass("confirmation")){
+          selector.next()
+        }
+        let element = $j('.actual'); 
         element.removeClass('confirmation');
         console.log(selector.last+" "+selector.listOfQueue[lastIndex])
         $j(".next").toggleClass("invisible")
         $j(".next").text(selector.listOfQueue[lastIndex]);
         selector.last=lastIndex
-        selector.next()
       }
+      selector.last=lastIndex
+
     });
   },
   next: function(){

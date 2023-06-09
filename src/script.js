@@ -140,7 +140,7 @@ function confirmation() {
   postId = $(".header").attr("data-post");
   data = {
     
-    concurent: selector.actual,
+    concurent: selector.listOfQueue[selector.actual] ,
     total: total["value"],
     post: postId,
     elemente: total["elements"],
@@ -179,10 +179,10 @@ function sumCheckedPenalizare() {
 
 function generateHTMLString(data) {
   let htmlString = '<p>';
-  htmlString += 'Concurent: ' + data.concurent + '';
-  htmlString += ' Total: ' + data.total + '';
-  htmlString += ' Post: ' + data.post + '';
-  htmlString += ' Elemente: ' + data.elemente + '';
+  htmlString += 'Concurent: ' + data.concurent + ',';
+  htmlString += ' Total: ' + data.total + ',';
+  htmlString += ' Post: ' + data.post + ',';
+  htmlString += ' Elemente: ' + data.elemente + '.';
   
   htmlString += '</p>';
   $(".localLog").prepend(htmlString)
