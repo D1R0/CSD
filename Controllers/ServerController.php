@@ -48,7 +48,7 @@ class ServerController
             "user4" => [
                 "id" => "admin",
                 "pass" => "admincsd23",
-                "role" => "admin"
+                "role" => "adminsmy"
             ],
             "user5" => [
                 "id" => "mod",
