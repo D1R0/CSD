@@ -79,15 +79,15 @@
         <div class="col">
 
             <label>
-                <input type="checkbox" name="option1" value="Option 1" data-penalizare="5" id="1S">
-                1S
+                <input type="checkbox" name="option1" value="Option 1" data-penalizare="5" id="1D">
+                1D
             </label>
         </div>
         <div class="col">
 
             <label>
-                <input type="checkbox" name="option1" value="Option 1" data-penalizare="5" id="1D">
-                1D
+                <input type="checkbox" name="option1" value="Option 1" data-penalizare="5" id="1S">
+                1S
             </label>
         </div>
     </div>
@@ -95,15 +95,15 @@
         <div class="col">
 
             <label>
-                <input type="checkbox" name="option1" value="Option 1" data-penalizare="5" id="2S">
-                2S
+                <input type="checkbox" name="option1" value="Option 1" data-penalizare="5" id="2D">
+                2D
             </label>
         </div>
         <div class="col">
 
             <label>
-                <input type="checkbox" name="option1" value="Option 1" data-penalizare="5" id="2D">
-                2D
+                <input type="checkbox" name="option1" value="Option 1" data-penalizare="5" id="2S">
+                2S
             </label>
         </div>
     </div>
