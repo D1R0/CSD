@@ -40,11 +40,6 @@ class ServerController
                 "pass" => "jaloncsd23",
                 "role" => "jalon"
             ],
-            "user3" => [
-                "id" => "startstop",
-                "pass" => "startstopcsd23",
-                "role" => "startstop"
-            ],
             "user4" => [
                 "id" => "admin",
                 "pass" => "adminsmy",
@@ -103,7 +98,7 @@ class ServerController
                 "sosire" => "templates/sosire",
             ],
         ];
-        return $posturi;
+        return $posturiPeriam;
     }
 
     public function install()

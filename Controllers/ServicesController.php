@@ -81,7 +81,7 @@ class ServicesController extends ServerController
                 $this->writeLog("timp: " . $timp);
                 $fileName = $this->penalizariDir;
                 $myfile = fopen($fileName, "r");
-                $penalizari = explode(",", fread($myfile, filesize($fileName)));
+                $penalizari = explode(",", fread($myfile,  filesize($fileName) > 0 ?  filesize($fileName) : 1));
                 fclose($myfile);
                 $myfile = fopen($this->penalizariDir, "w");
                 fwrite($myfile, "");

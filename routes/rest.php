@@ -50,7 +50,7 @@ $routes->add('/admin', 'GET', function () {
 });
 $routes->add('/start-stop', 'GET', function () {
     if (isset($_SESSION['role'])) {
-        if ($_SESSION['role'] == "startstop" || $_SESSION['role'] == "admin") {
+        if ($_SESSION['role'] == "post" || $_SESSION['role'] == "admin") {
             render("start-stop");
         } else {
             render("logout");

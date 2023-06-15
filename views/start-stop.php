@@ -9,7 +9,8 @@
                         <h3 class="concurentActiv">
                             <?php $fileName = "data/sessionPlayer.txt";
                             $myfile = fopen($fileName, "r") or die("Unable to open file!");
-                            $player = fread($myfile, filesize($fileName));
+                            $player = fread($myfile,  filesize($fileName) > 0 ?  filesize($fileName) : 1);
+
                             fclose($myfile);
                             echo $player; ?>
                         </h3>
