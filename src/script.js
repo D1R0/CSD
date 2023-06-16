@@ -26,7 +26,8 @@ let startTime;
 let stopTime;
 let running = false;
 let updateTime;
-function start() {
+function start(button) {
+  trecereTraseu(button)
   if (!running) {
     running = true;
     startTime = new Date();
@@ -66,7 +67,8 @@ function update() {
     minutesString + ":" + secondsString + "." + millisecondsString;
 }
 
-function reset() {
+function reset(button) {
+  trecereTraseu(button)
   running = false;
   clearInterval(updateTime);
   document.getElementById("time").innerHTML = "00:00:00";
@@ -198,6 +200,12 @@ function trecereStart(button) {
 function trecereSosire(button) {
   button.disabled = true; // Disable the button
   confirmation();
+  setTimeout(function () {
+    button.disabled = false; // Enable the button after 5 seconds
+  }, 5000);
+}
+function trecereTraseu(button) {
+  button.disabled = true; // Disable the button
   setTimeout(function () {
     button.disabled = false; // Enable the button after 5 seconds
   }, 5000);

@@ -31,7 +31,7 @@
     <hr>
     <div class="actionButtons text-center" id="stopwatch">
         <h2 id="time">00:00.00</h2>
-        <button class="btn btn-success m-2 text-white p-4" id="start" onclick="start()">Start</button>
+        <button class="btn btn-success m-2 text-white p-4" id="start" onclick="start(this)">Start</button>
 
     </div>
     <div class="text-center my-4">
