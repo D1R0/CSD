@@ -69,36 +69,26 @@ class ServerController
     public function posturi()
     {
 
-        $posturiPeriam = [
-            "sicana" => [
-                2 => "templates/sicanaView",
-                13 => "templates/sicanaView"
-            ],
-            "jalon" => [
-                1 => "templates/jalonSimplu",
-                4 => "templates/jalonSimplu",
-                23 => "templates/opturi",
-            ]
-        ];
+        // $posturiPeriam = [
+        //     "sicana" => [
+        //         1 => "templates/sicanaView",
+        //         2 => "templates/sicanaView"
+        //     ],
+        //     "jalon" => [
+        //         1 => "templates/jalonSimplu",
+        //         2 => "templates/jalonSimplu",
+        //     ]
+        // ];
+        
         $posturi = [
             "post" => [
-                1 => "templates/s2sj",
-                2 => "templates/4sj",
-                3 => "templates/3sj",
-                4 => "templates/2sj",
-                5 => "templates/5sj",
-                6 => "templates/4sj",
-                7 => "templates/5sj",
-                8 => "templates/4sj",
-                9 => "templates/5sj",
-                10 => "templates/2sj",
-                11 => "templates/sicana5e",
-                12 => "templates/sicanaView",
-                "start" => "templates/start",
-                "sosire" => "templates/sosire",
+                "sicana-1" => "templates/sicanaView",
+                "sicana-2" => "templates/sicanaView",
+                "jalon-1" => "templates/jalonSimplu",
+                "jalon-2" => "templates/jalonSimplu",
             ],
         ];
-        return $posturiPeriam;
+        return $posturi;
     }
 
     public function install()

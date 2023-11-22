@@ -1,13 +1,13 @@
 const adminHandler = {
-  init: function(){
+  init: function () {
 
-    $j(".clearQueue").on("click", function(){
-      $j.post(clearQueue, {}, function(response){
+    $j(".clearQueue").on("click", function () {
+      $j.post(clearQueue, {}, function (response) {
         location.reload()
       })
     })
   },
-  clearQueue: function(){}
+  clearQueue: function () { }
 }
 
 fetch("../data/concurenti.csv")
@@ -23,9 +23,9 @@ fetch("../data/concurenti.csv")
           $j(".activePlayer").append(
             "<option>" +
             Object.values(concurent)[0] +
-              " " +
-              Object.values(concurent)[1] +
-              "</option>"
+            " " +
+            Object.values(concurent)[1] +
+            "</option>"
           );
         });
       },
@@ -33,7 +33,7 @@ fetch("../data/concurenti.csv")
   });
 function sendPlayer() {
   playerActive = $j(".activePlayer").val();
-  $j(".active").text(playerActive+ " a fost trimis")
+  $j(".active").text(playerActive + " a fost trimis")
   $j.post(
     SERVER_URL,
     { command: "playerActive", active: playerActive },
@@ -85,25 +85,10 @@ function clearDatas() {
   });
 }
 function downloadTimpi() {
-  fetch("/concurentiTimp.csv")
-    .then((response) => response.blob())
-    .then((blob) => {
-      // create a URL for the blob object
-      const url = window.URL.createObjectURL(blob);
-
-      // create a link element and click it to download the file
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "concurentiTimp.csv";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      // release the URL object
-      window.URL.revokeObjectURL(url);
-    });
+  window.open(
+    "/download", "_blank");
 }
 
-$j(document).ready(function(){
+$j(document).ready(function () {
   adminHandler.init()
 })

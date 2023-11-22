@@ -127,9 +127,9 @@ function login() {
         }
         $j("#div_session_write").load(
           "/views/auth.php?user=" +
-            responseObject[0]["user"] +
-            "&role=" +
-            responseObject[0]["role"]
+          responseObject[0]["user"] +
+          "&role=" +
+          responseObject[0]["role"]
         );
       } else {
         $j(".response").text("Datele sunt incorecte");
@@ -141,8 +141,8 @@ function confirmation() {
   total = uncheckAllCheckboxes();
   postId = $(".header").attr("data-post");
   data = {
-    
-    concurent: selector.listOfQueue[selector.actual] ,
+
+    concurent: selector.listOfQueue[selector.actual],
     total: total["value"],
     post: postId,
     elemente: total["elements"],
@@ -154,14 +154,14 @@ function confirmation() {
     selector.next();
   }
   generateHTMLString(data)
-  $.post(SERVER_URL,{data,command:"process"},function(response){
-
+  $j.post(SERVER_URL, { data, command: "process" }, function (response) {
+    uncheckAllCheckboxes()
   })
 }
 
 function uncheckAllCheckboxes() {
   allPenalties = sumCheckedPenalizare();
-  $(".allContainer").find('input[type="checkbox"]').prop("checked", false);
+  $j(".allContainer").find('input[type="checkbox"]').prop("checked", false);
   return allPenalties;
 }
 function sumCheckedPenalizare() {
@@ -181,11 +181,11 @@ function sumCheckedPenalizare() {
 
 function generateHTMLString(data) {
   let htmlString = '<p>';
-  htmlString += 'Concurent: ' + data.concurent + ',';
-  htmlString += ' Total: ' + data.total + ',';
-  htmlString += ' Post: ' + data.post + ',';
-  htmlString += ' Elemente: ' + data.elemente + '.';
-  
+  htmlString += 'Concurent: <b>' + data.concurent + '</b>,';
+  htmlString += ' Total: <b>' + data.total + '</b>,';
+  htmlString += ' Post: <b>' + data.post + '</b>,';
+  htmlString += ' Elemente: <b>' + data.elemente + '</b>.';
+
   htmlString += '</p>';
   $(".localLog").prepend(htmlString)
 }

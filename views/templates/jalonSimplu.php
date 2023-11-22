@@ -9,8 +9,6 @@
         <br>
         <br>
         <br>
-        <input type="checkbox" name="option6" value="Option 6" id="inversare" data-penalizare="3">
-        Intrare gresita
 
     </div>
     <br>
